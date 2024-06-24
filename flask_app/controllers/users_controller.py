@@ -67,23 +67,9 @@ def home():
         return redirect('/')
     return render_template('home.html')
 
-# Reminder/Goals Page
-@app.route('/todos')
-def todo_page():
-    if 'user_id' not in session:
-        return redirect('/')
-    return render_template('/todos_page.html')
-
 # Life Tracker Page
 @app.route('/lifetrack')
 def life_tracker():
     if 'user_id' not in session:
         return redirect('/')
     return render_template('/lifetrack_page.html')
-
-# View Activity Page
-@app.route('/activities')
-def activity_page():
-    if 'user_id' not in session:
-        return redirect('/')
-    return render_template('/activities_page.html')
