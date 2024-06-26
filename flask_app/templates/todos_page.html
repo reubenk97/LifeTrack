@@ -16,34 +16,109 @@
             </div>
         </div>
         <div class="container">
-            <div class="d-flex justify-content-around border-bottom mt-5">
-                <h2>ToDo's</h2>
-                <h2>Goals</h2>
+            <div class="d-flex justify-content-around border-bottom mt-3">
+                <h2 id="todos-header" onclick="switchTodoView(this)" class="text-primary">To-Do's</h2>
+                <h2 id="goals-header" onclick="switchTodoView(this)">Goals</h2>
             </div>
-            <div class="d-flex justify-content-around gap-2">
+            <div id="todos-view" class="d-flex justify-content-around gap-2">
                 <div class="border rounded w-50 py-3 px-5 mt-3">
                     <div class="d-flex justify-content-between">
                         <p class="fs-5">Current</p>
-                        <a class="fs-5 link-underline link-underline-opacity-0 text-light">+</a>
+                        <a class="fs-5 link-underline link-underline-opacity-0 text-light" onclick="showAddTodo()">+</a>
                     </div>
-                    <form id="todo-form" class="" onsubmit="addTodo(event)">
+                    <form id="todo-form" class="d-none" onsubmit="addTodo(event)">
                         <input type="text" name="title" placeholder="Title" class="form-control mb-1">
                         <textarea name="description" placeholder="Description" class="form-control mb-1"></textarea>
                         <input type="date" name="date" class="form-control mb-1">
                         <input type="text" name="location" placeholder="Location" class="form-control mb-1">
-                        <button class="btn btn-warning">Add</button>
+                        <button class="btn btn-success">Add</button>
+                        <div id="todo-error-field"></div>
                     </form>
-                    <div id="error-field"></div>
                     <table id="todos-table" class="table table-dark">
-                        
                         <!-- jinja for loop through users' todos -->
+                        {% if todos_list|length < 1 %}
+                            <tr id="todo-filler-row">
+                                <td class="text-center">You have no current To-Do's.</td>
+                            </tr>
+                        {% else %}
                         {% for todo in todos_list %}
-                            <tr>
+                        <tr id="{{ todo.id }}-row">
                                 <td>{{ todo.title }}</td>
                                 <td>{{ todo.date }}</td>
-                                <td><a>Edit</a> | <a>Delete</a></td>
+                                <td><a onclick="showEditTodo()" class="link-underline link-underline-opacity-0 text-success">Edit</a> | <a href="todos/{{todo.id}}/delete" class="link-underline link-underline-opacity-0 text-success">Delete</a></td>
+                                <td><input type="checkbox" name="{{ todo.title }}-check" class="form-check-input"></td>
                             </tr>
+                            <!-- Add after MVP, needs fixing -->
+                            {# <form id="edit-todo-form" class="d-none" onsubmit="editTodo(event, {{ todo.id }})">
+                                <input type="text" name="title" class="form-control mb-1" value="{{ todo.title }}">
+                                <textarea name="description" class="form-control mb-1">{{ todo.description }}</textarea>
+                                <input type="date" name="date" class="form-control mb-1" value="{{ todo.date }}">
+                                <input type="text" name="location" class="form-control mb-1" value="{{ todo.location }}">
+                                <button class="btn btn-success">Edit</button>
+                                <div id="edit-todo-error-field"></div>
+                            </form> #}
                         {% endfor %}
+                        {% endif %}
+                    </table>
+                </div>
+                <div class="border rounded w-50 p-3 mt-3">
+                    <div class="d-flex">
+                        <p class="fs-5 mb-0 text-center w-100">Completed</p>
+                    </div>
+                </div>
+            </div>
+            <div id="goals-view" class="d-none justify-content-around gap-2">
+                <div class="border rounded w-50 py-3 px-5 mt-3">
+                    <div class="d-flex justify-content-between">
+                        <p class="fs-5">Current</p>
+                        <a class="fs-5 link-underline link-underline-opacity-0 text-light" onclick="showAddGoal()">+</a>
+                    </div>
+                    <form id="goal-form" class="d-none" onsubmit="addGoal(event)">
+                        <input type="text" name="title" placeholder="Title" class="form-control mb-1">
+                        <textarea name="description" placeholder="Description" class="form-control mb-1" rows="5"></textarea>
+                        <div class="d-flex gap-5 align-items-center">
+                            <label for="start_date" class="form-label">Start:&emsp;</label>
+                            <input type="date" name="start_date" class="form-control mb-1 me-5 w-25">
+                        </div>
+                        <div class="d-flex gap-5 align-items-center">
+                            <label for="end_date" class="form-label">End:&nbsp;&emsp;</label>
+                            <input type="date" name="end_date" class="form-control mb-1 me-5 w-25">
+                        </div>
+                        <button class="btn btn-success">Add</button>
+                        <div id="goal-error-field"></div>
+                    </form>
+                    <table id="goals-table" class="table table-dark">
+                        <!-- jinja for loop through users' goals -->
+                        {% if goals_list|length < 1 %}
+                            <tr id="goal-filler-row">
+                                <td class="text-center">You have no current Goals.</td>
+                            </tr>
+                        {% else %}
+                        {% for goal in goals_list %}
+                        <tr id="{{ goal.id }}-row">
+                                <td>{{ goal.title }}</td>
+                                <!-- Need to add a way to progress goals after MVP -->
+                                <td>Progression: 0% </td>
+                                <td><a onclick="showEditGoal()" class="link-underline link-underline-opacity-0 text-success">Edit</a> | <a href="goals/{{goal.id}}/delete" class="link-underline link-underline-opacity-0 text-success">Delete</a></td>
+                                <td><input type="checkbox" name="{{ goal.title }}-check" class="form-check-input"></td>
+                            </tr>
+                            <!-- Add after MVP, needs fixing -->
+                            {# <form id="edit-goal-form" class="d-none" onsubmit="editGoal(event, {{ goal.id }})">
+                                <input type="text" name="title" class="form-control mb-1" value="{{ goal.title }}">
+                                <textarea name="description" class="form-control mb-1">{{ goal.description }}</textarea>
+                                <div class="d-flex">
+                                    <label for="start_date" class="form-label">Start: </label>
+                                    <input type="date" name="start_date" class="form-control mb-1" value="{{ goal.date }}">
+                                </div>
+                                <div class="d-flex">
+                                    <label for="end_date" class="form-label">End: </label>
+                                    <input type="date" name="end_date" class="form-control mb-1" value="{{ goal.date }}">
+                                </div>
+                                <button class="btn btn-success">Edit</button>
+                                <div id="edit-goal-error-field"></div>
+                            </form> #}
+                        {% endfor %}
+                        {% endif %}
                     </table>
                 </div>
                 <div class="border rounded w-50 p-3 mt-3">
@@ -54,6 +129,6 @@
             </div>
         </div>
     </div>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='todo-script.js') }}"></script>
 </body>
 </html>

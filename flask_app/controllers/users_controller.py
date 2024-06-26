@@ -66,10 +66,3 @@ def home():
     if 'user_id' not in session:
         return redirect('/')
     return render_template('home.html')
-
-# Life Tracker Page
-@app.route('/lifetrack')
-def life_tracker():
-    if 'user_id' not in session:
-        return redirect('/')
-    return render_template('/lifetrack_page.html')

@@ -1,66 +1,56 @@
 from flask_app import app
 from flask import render_template, session, redirect, request, flash
-from flask_app.models.todo_model import Todo
 from flask_app.models.user_model import User
 from flask_app.models.goal_model import Goal
 
-# Reminder/Goals Page
-@app.route('/todos')
-def todo_page():
-    if 'user_id' not in session:
-        return redirect('/')
-    todos_list = Todo.get_all({'id':session['user_id']})
-    goals_list = Goal.get_all({'id':session['user_id']})
-    return render_template('/todos_page.html', todos_list = todos_list, goals_list = goals_list)
-
-@app.route('/todos/add', methods=['post'])
-def ajax_add_todo():
+@app.route('/goals/add', methods=['post'])
+def ajax_add_goal():
     if 'user_id' not in session:
         return redirect('/')
     print(request.form)
-    errors = Todo.validate(request.form)
+    errors = Goal.validate(request.form)
     if len(errors) > 0:
         return {'message':'validations failed', 'errors':errors}
-    todo_data = {
+    goal_data = {
         **request.form,
         'user_id': session['user_id']
     }
-    id = Todo.create(todo_data)
+    id = Goal.create(goal_data)
     logged_user = User.get_by_id({'id':session['user_id']})
 
     res = {
-        **todo_data,
+        **goal_data,
         'id':id,
         'username':f'{logged_user.username}'
     }
     
     return res
 
-@app.route('/todos/<int:id>/edit', methods=['post'])
-def ajax_edit_todo(id):
+@app.route('/goals/<int:id>/edit', methods=['post'])
+def ajax_edit_goal(id):
     if 'user_id' not in session:
         return redirect('/')
-    errors = Todo.validate(request.form)
+    errors = Goal.validate(request.form)
     if len(errors) > 0:
         return {'message':'validations failed', 'errors':errors}
-    todo_data = {
+    goal_data = {
         **request.form,
         'user_id': session['user_id']
     }
-    Todo.update(todo_data)
+    Goal.update(goal_data)
     logged_user = User.get_by_id({'id':session['user_id']})
 
     res = {
-        **todo_data,
+        **goal_data,
         'id':id,
         'username':f'{logged_user.username}'
     }
     
     return res
 
-@app.route('/todos/<int:id>/delete')
-def delete_todo(id):
+@app.route('/goals/<int:id>/delete')
+def delete_goal(id):
     if 'user_id' not in session:
         return redirect('/')
-    Todo.remove({'id':id})
+    Goal.remove({'id':id})
     return redirect('/todos')

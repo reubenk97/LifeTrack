@@ -1,0 +1,1 @@
+const currAddress = document.querySelector('.address')

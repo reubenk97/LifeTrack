@@ -17,7 +17,7 @@ class Todo:
     def create(cls, data):
         query = """
             INSERT INTO todos (title, description, date, location, user_id)
-            VALUES (%(title)s, %(description)s, %(date)s, %(location)s, %(user_id)s)
+            VALUES (%(title)s, %(description)s, %(date)s, %(location)s, %(user_id)s);
         """
         return connect_to_mysql(DB).query_db(query, data)
     
@@ -33,14 +33,32 @@ class Todo:
             this_todo = cls(row)
             todos_list.append(this_todo)
         return todos_list
+    
+    @classmethod
+    def remove(cls, data):
+        query = """
+            DELETE FROM todos
+            WHERE id = %(id)s;
+        """
+        return connect_to_mysql(DB).query_db(query, data)
 
-
+    @classmethod
+    def update(cls, data):
+        query = """
+            UPDATE todos
+            SET title = %(title)s,
+            description = %(description)s,
+            date = %(date)s,
+            location = %(location)s
+            WHERE id = %(id)s;
+        """
+        return connect_to_mysql(DB).query_db(query, data)
 
     @staticmethod
     def validate(data):
         errors = []
-        if len(data['title']) < 1:
-            errors.append("Title is required")
+        if len(data['title']) < 1 or len(data['description']) < 1 or len(data['date']) < 1 or len(data['location']) < 1:
+            errors.append("All fields required")
             # errors.append({'cat':'what', 'error':"what is required"})
 
         return errors
