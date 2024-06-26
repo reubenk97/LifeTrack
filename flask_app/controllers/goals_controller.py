@@ -53,4 +53,4 @@ def delete_goal(id):
     if 'user_id' not in session:
         return redirect('/')
     Goal.remove({'id':id})
-    return redirect('/todos')
+    return redirect('/goals')

@@ -18,7 +18,7 @@
         <div class="container">
             <input type="search" class="form-control border rounded p-3 w-100 my-3" placeholder="Search a location">
             <div class="d-flex justify-content-evenly">
-                <iframe class="w-50 border rounded" height="500" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key={{maps_key}}&q=Space+Needle,Seattle+WA"></iframe>
+                <!-- <iframe class="w-50 border rounded" height="500" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key={{maps_key}}&q=Space+Needle,Seattle+WA"></iframe> -->
                 <div id="add_activity" class="w-25 mx-5">
                     <h3 class="text-center">Add Activity</h3>
                     <form action="/activities/add" method="post">
@@ -33,10 +33,10 @@
                                 <input type="time" name="end_time" class=" mb-3 form-control">
                             </div>
                         </div>
-                        <select class="mb-3 form-select">
+                        <select class="mb-3 form-select" name="category_id">
                             <option selected>Category</option>
                             {% for category in categories_list %}
-                                <option value="{{ category.title }}">{{ category.title }}</option>
+                                <option value="{{ category.id }}">{{ category.title }}</option>
                             {% endfor %}
                         </select>
                         <input type="text" name="location" class="mb-3 form-control" placeholder="Address">

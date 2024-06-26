@@ -25,8 +25,8 @@ DROP TABLE IF EXISTS `activities`;
 CREATE TABLE `activities` (
   `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(45) DEFAULT NULL,
-  `start_time` datetime DEFAULT NULL,
-  `end_time` datetime DEFAULT NULL,
+  `start_time` time DEFAULT NULL,
+  `end_time` time DEFAULT NULL,
   `location` varchar(45) DEFAULT NULL,
   `notes` text,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
@@ -63,7 +63,7 @@ CREATE TABLE `categories` (
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,6 +72,7 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` VALUES (1,'Grocery','2024-06-25 15:01:41','2024-06-25 15:01:41'),(2,'Dining','2024-06-25 15:01:47','2024-06-25 15:01:47'),(3,'Other','2024-06-25 15:01:58','2024-06-25 15:01:58'),(4,'Event','2024-06-25 15:02:07','2024-06-25 15:02:07'),(5,'School','2024-06-25 15:03:00','2024-06-25 15:03:00'),(6,'Work','2024-06-25 15:03:03','2024-06-25 15:03:03');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,7 +95,7 @@ CREATE TABLE `goals` (
   PRIMARY KEY (`id`),
   KEY `fk_goals_users1_idx` (`user_id`),
   CONSTRAINT `fk_goals_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,6 +104,7 @@ CREATE TABLE `goals` (
 
 LOCK TABLES `goals` WRITE;
 /*!40000 ALTER TABLE `goals` DISABLE KEYS */;
+INSERT INTO `goals` VALUES (8,'asdfasdfasdfa','sdfasdfasdfafdf','2024-06-26','2024-06-28','2024-06-26 08:17:25','2024-06-26 08:17:25',1);
 /*!40000 ALTER TABLE `goals` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -153,7 +155,7 @@ CREATE TABLE `todos` (
   PRIMARY KEY (`id`),
   KEY `fk_todos_users_idx` (`user_id`),
   CONSTRAINT `fk_todos_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -162,7 +164,7 @@ CREATE TABLE `todos` (
 
 LOCK TABLES `todos` WRITE;
 /*!40000 ALTER TABLE `todos` DISABLE KEYS */;
-INSERT INTO `todos` VALUES (7,'sasdfasdfasdf','asdfasdfasdfasdf','2024-06-25','Home','2024-06-25 12:29:24','2024-06-25 12:29:24',1);
+INSERT INTO `todos` VALUES (9,'adfasdf','asdfsadf','2024-06-27','adsf','2024-06-26 08:53:34','2024-06-26 08:53:34',1);
 /*!40000 ALTER TABLE `todos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,4 +205,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-25 14:05:28
+-- Dump completed on 2024-06-26  9:00:52

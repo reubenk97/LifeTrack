@@ -10,8 +10,14 @@ def todo_page():
     if 'user_id' not in session:
         return redirect('/')
     todos_list = Todo.get_all({'id':session['user_id']})
+    return render_template('/todos_page.html', todos_list = todos_list)
+
+@app.route('/goals')
+def goals_page():
+    if 'user_id' not in session:
+        return redirect('/')
     goals_list = Goal.get_all({'id':session['user_id']})
-    return render_template('/todos_page.html', todos_list = todos_list, goals_list = goals_list)
+    return render_template('/goals_page.html', goals_list = goals_list)
 
 @app.route('/todos/add', methods=['post'])
 def ajax_add_todo():

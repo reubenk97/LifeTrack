@@ -19,26 +19,40 @@
             <h3 class="text-center">Activities</h3>
             <div class="d-flex">
                 <div class="w-25 mt-3 text-center">
-                    <h4 class="border-bottom py-3">All Activities</h4>
-                    <h4>Categories</h4>
+                    <a href="/activities" class="link-underline link-underline-opacity-0"><h4 class="border-bottom py-3 text-primary">All Activities</h4></a>
+                    <a href="/categories" class="link-underline link-underline-opacity-0"><h4 class="text-light">Categories</h4></a>
                 </div>
-                <div id="activity-section" class="d-none border rounded w-75 p-3 mt-3 text-center">
-                    <div class="d-flex justify-content-between">
+                <div id="activity-section" class="border rounded w-75 p-3 mt-3 text-center">
+                    <div class="d-flex justify-content-evenly">
                         <h6>DAY</h6>
                         <h6>MONTH</h6>
                         <h6>YEAR</h6>
                     </div>
+                    <table class="w-100">
+                        <thead>
+                            <tr>
+                                <th>Activity</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Location</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for activity in activities_list %}
+                            <tr>
+                                <td>{{ activity.title }}</td>
+                                <td>{{ activity.start_time }}</td>
+                                <td>{{ activity.end_time }}</td>
+                                <td>{{ activity.location }}</td>
+                                <td>{{ activity.notes }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    
+                    
                     <!-- Add tiles of activities here -->
-                </div>
-                <div id="category-section" class="border rounded w-75 p-3 mt-3 text-center">
-                    <!-- Add new categories here, get rid of example -->
-                    <div class="d-flex justify-content-between border rounded py-3 px-5 mb-3">
-                        <h6>Groceries</h6>
-                        <h6>Edit</h6>
-                    </div>
-                    <div class="d-flex border rounded py-3 px-5">
-                        <h6>(Add New Category...)</h6>
-                    </div>
                 </div>
             </div>
         </div>

@@ -18,15 +18,22 @@ def life_tracker():
 def activity_page():
     if 'user_id' not in session:
         return redirect('/')
-    return render_template('/activities_page.html')
+    data = {
+        'id':session['user_id']
+    }
+    activities_list = Activity.get_all(data)
+    return render_template('/activities_page.html', activities_list = activities_list)
 
+# Process creating a new Activity
 @app.route('/activities/add', methods=['post'])
-def activity_add():
+def add_activity():
     if 'user_id' not in session:
         return redirect('/')
+    print("Attempting to add Activity.")
     if not Activity.validate(request.form):
         return redirect('/lifetrack')
     data = {
+        **request.form,
         'user_id':session['user_id']
     }
     Activity.create(data)

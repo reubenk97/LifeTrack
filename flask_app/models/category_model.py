@@ -20,3 +20,19 @@ class Category:
             this_category = cls(row)
             categories_list.append(this_category)
         return categories_list
+    
+    @classmethod
+    def create(cls, data):
+        query = """
+            INSERT INTO categories (title)
+            VALUES (%(title)s);
+        """
+        return connect_to_mysql(DB).query_db(query, data)
+    
+    @staticmethod
+    def validate(data):
+        errors = []
+        if len(data['title']) < 1:
+            errors.append("Title is required")
+            # errors.append({'cat':'what', 'error':"what is required"})
+        return errors
