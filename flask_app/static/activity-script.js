@@ -8,25 +8,41 @@ function addCategory(event) {
     console.log('Attempting to add new Activity.');
     let categoryFormData = new FormData(addCategoryForm)
     fetch ('/categories/add', { method: 'post', body: categoryFormData })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            addCategoryErrorField.innerHTML = ""
-            if (data.hasOwnProperty('errors')) {
-                console.log('errors found', data.errors)
-                for (let error of data.errors){
-                    addCategoryErrorField.innerHTML += `<p class='text-danger'>${error}</p>`
-                }
-            } 
-            else {
-                categoryList.innerHTML += `
-                <div class="d-flex justify-content-between border rounded py-3 px-5 mb-3">
-                    <h6>${data.title}</h6>
-                    <h6>Edit</h6>
-                </div>
-                `;
-                addCategoryForm.title.value = "";
+    .then(res => res.json())
+    .then(data => {
+        console.log(data)
+        addCategoryErrorField.innerHTML = ""
+        if (data.hasOwnProperty('errors')) {
+            console.log('errors found', data.errors)
+            for (let error of data.errors){
+                addCategoryErrorField.innerHTML += `<p class='text-danger'>${error}</p>`
             }
-        })
-        .catch(err => console.log(err));
+        } 
+        else {
+            categoryList.innerHTML += `
+            <div class="d-flex justify-content-between border rounded py-3 px-5 mb-3">
+            <h6>${data.title}</h6>
+            <h6>Edit</h6>
+            </div>
+            `;
+            addCategoryForm.title.value = "";
+        }
+    })
+    .catch(err => console.log(err));
+}
+
+function getAddress(event, key) {
+    event.preventDefault()
+    console.log('Searching API...');
+    let mapSearch = document.querySelector('#map-search')
+    let mapArea = document.querySelector('iframe')
+    mapArea.src = `/https://www.google.com/maps/embed/v1/place?key=${key}&q=${mapSearch}`;
+
+    // fetch (`/https://www.google.com/maps/embed/v1/place?key={{maps_key}}&q=${mapSearch}`)
+    //     .then(res => res.json())
+    //     .then(data => {
+    //         console.log(data)
+    //         mapSearch.value = "";
+    //     })
+    //     .catch(err => console.log(err));
 }

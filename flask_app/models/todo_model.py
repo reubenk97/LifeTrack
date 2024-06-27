@@ -8,24 +8,33 @@ class Todo:
         self.description = data['description']
         self.date = data['date']
         self.location = data['location']
+        self.completed = data['completed']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         self.user_id = data['user_id']
-        related_goals = []
+        self.related_goals = []
 
     @classmethod
     def create(cls, data):
         query = """
-            INSERT INTO todos (title, description, date, location, user_id)
-            VALUES (%(title)s, %(description)s, %(date)s, %(location)s, %(user_id)s);
+            INSERT INTO todos (title, description, date, location, completed, user_id)
+            VALUES (%(title)s, %(description)s, %(date)s, %(location)s, 0, %(user_id)s);
         """
         return connect_to_mysql(DB).query_db(query, data)
+    
+    @classmethod
+    def get(cls, data):
+        query = """
+            SELECT * FROM todos
+            WHERE id = %(id)s;
+        """
+        return cls(connect_to_mysql(DB).query_db(query, data)[0])
     
     @classmethod
     def get_all(cls, data):
         query = """
             SELECT * FROM todos
-            WHERE user_id = %(id)s;
+            WHERE user_id = %(id)s AND completed = %(completed)s;
         """
         results = connect_to_mysql(DB).query_db(query, data)
         todos_list = []
@@ -49,7 +58,17 @@ class Todo:
             SET title = %(title)s,
             description = %(description)s,
             date = %(date)s,
-            location = %(location)s
+            location = %(location)s,
+            completed = %(completed)s
+            WHERE id = %(id)s;
+        """
+        return connect_to_mysql(DB).query_db(query, data)
+    
+    @classmethod
+    def complete(cls, data):
+        query = """
+            UPDATE todos
+            SET completed = 1
             WHERE id = %(id)s;
         """
         return connect_to_mysql(DB).query_db(query, data)

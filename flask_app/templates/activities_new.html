@@ -16,9 +16,9 @@
             </div>
         </div>
         <div class="container">
-            <input type="search" class="form-control border rounded p-3 w-100 my-3" placeholder="Search a location">
+            <form id="map-search" onsubmit="getAddress(event, {{ maps_key }})"><input type="search" class="form-control border rounded p-3 w-100 my-3" placeholder="Search a location"></form>
             <div class="d-flex justify-content-evenly">
-                <!-- <iframe class="w-50 border rounded" height="500" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key={{maps_key}}&q=Space+Needle,Seattle+WA"></iframe> -->
+                <iframe class="w-50 border rounded" height="500" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key={{maps_key}}&q=Space+Needle,Seattle+WA"></iframe>
                 <div id="add_activity" class="w-25 mx-5">
                     <h3 class="text-center">Add Activity</h3>
                     <form action="/activities/add" method="post">
