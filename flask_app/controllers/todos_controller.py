@@ -9,8 +9,9 @@ from flask_app.models.goal_model import Goal
 def todo_page():
     if 'user_id' not in session:
         return redirect('/')
-    todos_list = Todo.get_all({'id':session['user_id']})
-    return render_template('/todos_page.html', todos_list = todos_list)
+    todos_list = Todo.get_all({'id':session['user_id'], 'completed':0})
+    completed_list = Todo.get_all({'id':session['user_id'], 'completed':1})
+    return render_template('/todos_page.html', todos_list = todos_list, completed_list = completed_list)
 
 @app.route('/goals')
 def goals_page():
@@ -70,3 +71,13 @@ def delete_todo(id):
         return redirect('/')
     Todo.remove({'id':id})
     return redirect('/todos')
+
+@app.route('/todos/<int:id>/complete', methods=['post'])
+def complete_todo(id):
+    if 'user_id' not in session:
+        return redirect('/')
+    data = {
+        'id':id
+    }
+    Todo.complete(data)
+    return data
