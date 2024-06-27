@@ -31,18 +31,28 @@ function addCategory(event) {
     .catch(err => console.log(err));
 }
 
-function getAddress(event, key) {
+function getAddress(event) {
     event.preventDefault()
     console.log('Searching API...');
     let mapSearch = document.querySelector('#map-search')
     let mapArea = document.querySelector('iframe')
-    mapArea.src = `/https://www.google.com/maps/embed/v1/place?key=${key}&q=${mapSearch}`;
-
-    // fetch (`/https://www.google.com/maps/embed/v1/place?key={{maps_key}}&q=${mapSearch}`)
-    //     .then(res => res.json())
-    //     .then(data => {
-    //         console.log(data)
-    //         mapSearch.value = "";
-    //     })
-    //     .catch(err => console.log(err));
+    // mapArea.src = `/https://www.google.com/maps/embed/v1/place?key=${key}&q=${mapSearch}`;
+    fetch(`/lifetrack/search/${mapSearch.value}`)
+        .then(res => res.json())
+        .then(data => {
+            location.reload();
+            console.log(data);
+        })
+        .catch(err => console.log(err))
 }
+
+// let mapSearch = document.querySelector('#map-search')
+// mapSearch.addEventListener("keypress", function(event) {
+//     // If the user presses the "Enter" key on the keyboard
+//     if (event.key === "Enter") {
+//       // Cancel the default action, if needed
+//       event.preventDefault();
+//       // Trigger the button element with a click
+//       document.getElementById("myBtn").click();
+//     }
+//   });

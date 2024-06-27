@@ -16,9 +16,9 @@
             </div>
         </div>
         <div class="container">
-            <form id="map-search" onsubmit="getAddress(event, {{ maps_key }})"><input type="search" class="form-control border rounded p-3 w-100 my-3" placeholder="Search a location"></form>
+            <input id="map-search" type="search" class="form-control border rounded p-3 w-100 my-3" placeholder="Search a location" onchange="getAddress(event)">
             <div class="d-flex justify-content-evenly">
-                <iframe class="w-50 border rounded" height="500" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/place?key={{maps_key}}&q=Space+Needle,Seattle+WA"></iframe>
+                <iframe class="w-50 border rounded" height="500" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="{{ session['map-search'] }}"></iframe>
                 <div id="add_activity" class="w-25 mx-5">
                     <h3 class="text-center">Add Activity</h3>
                     <form action="/activities/add" method="post">
@@ -39,7 +39,7 @@
                                 <option value="{{ category.id }}">{{ category.title }}</option>
                             {% endfor %}
                         </select>
-                        <input type="text" name="location" class="mb-3 form-control" placeholder="Address">
+                        <input id="address-on-form" type="text" name="location" class="mb-3 form-control" placeholder="Address">
                         <textarea type="text" name="notes" class="mb-3 form-control" placeholder="Add Notes" rows="5"></textarea>
                         <button class="btn btn-success">Add</button>
                     </form>
