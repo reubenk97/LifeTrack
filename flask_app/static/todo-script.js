@@ -30,7 +30,7 @@ function addTodo(event) {
                 <tr id="t${data.id}-row">
                     <td>${data.title}</td>
                     <td>Due: ${data.date}</td>
-                    <td><a onclick="showEditTodo()" class="link-underline link-underline-opacity-0 text-success">Edit</a> | <a href="todos/${data.id}/delete" class="link-underline link-underline-opacity-0 text-success">Delete</a></td>
+                    <td><a href="todos/${data.id}/delete" class="link-underline link-underline-opacity-0 text-success">Delete</a></td>
                     <td><input type="checkbox" name="${data.completed}" id="${data.completed}" class="form-check-input" onclick="completeTodo(${data.id})"></td>
                 </tr>
                 ` + todosTable.innerHTML;
@@ -126,7 +126,7 @@ function addGoal(event) {
                 <tr id="${data.id}-row">
                     <td>${data.title}</td>
                     <td>Progression: 0% </td>
-                    <td><a onclick="showEditGoal()" class="link-underline link-underline-opacity-0 text-success">Edit</a> | <a href="goals/{{todo.id}}/delete" class="link-underline link-underline-opacity-0 text-success">Delete</a></td>
+                    <td><a href="goals/{{todo.id}}/delete" class="link-underline link-underline-opacity-0 text-success">Delete</a></td>
                     <td><input type="checkbox" name="${data.title}-check" class="form-check-input"></td>
                 </tr>
                 ` + goalsTable.innerHTML;

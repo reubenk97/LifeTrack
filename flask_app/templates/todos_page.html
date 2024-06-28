@@ -48,7 +48,7 @@
                         <tr id="t{{ todo.id }}-row">
                             <td>{{ todo.title }}</td>
                             <td>Due: {{ todo.date }}</td>
-                            <td><a onclick="showEditTodo()" class="link-underline link-underline-opacity-0 text-success">Edit</a> | <a href="todos/{{ todo.id }}/delete" class="link-underline link-underline-opacity-0 text-success">Delete</a></td>
+                            <td><a href="todos/{{ todo.id }}/delete" class="link-underline link-underline-opacity-0 text-success">Delete</a></td>
                             <td><input type="checkbox" name="{{ todo.completed }}" id="{{ todo.completed }}" class="form-check-input" onclick="completeTodo({{ todo.id }})"></td>
                         </tr>
                         <!-- Add after MVP, needs fixing -->
