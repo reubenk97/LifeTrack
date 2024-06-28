@@ -34,25 +34,15 @@ function addCategory(event) {
 function getAddress(event) {
     event.preventDefault()
     console.log('Searching API...');
-    let mapSearch = document.querySelector('#map-search')
-    let mapArea = document.querySelector('iframe')
-    // mapArea.src = `/https://www.google.com/maps/embed/v1/place?key=${key}&q=${mapSearch}`;
+    let mapSearch = document.querySelector('#map-search');
+    let formAddress = document.querySelector('#address-on-form');
+    let googleAddress = document.querySelector('iframe html body div#mapDiv.address')
     fetch(`/lifetrack/search/${mapSearch.value}`)
         .then(res => res.json())
         .then(data => {
+            console.log(googleAddress.innerHTML);
             location.reload();
-            console.log(data);
+            formAddress.value = googleAddress.innerHTML;
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log(err));
 }
-
-// let mapSearch = document.querySelector('#map-search')
-// mapSearch.addEventListener("keypress", function(event) {
-//     // If the user presses the "Enter" key on the keyboard
-//     if (event.key === "Enter") {
-//       // Cancel the default action, if needed
-//       event.preventDefault();
-//       // Trigger the button element with a click
-//       document.getElementById("myBtn").click();
-//     }
-//   });

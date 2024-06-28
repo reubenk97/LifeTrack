@@ -13,7 +13,6 @@ def life_tracker():
     if 'user_id' not in session:
         return redirect('/')
     categories_list = Category.get_all()
-    # session['map-search'] = f'https://www.google.com/maps/embed/v1/place?key={maps_key}&q=NASA+Texas'
     return render_template('/activities_new.html', maps_key = maps_key, categories_list = categories_list)
 
 @app.route('/lifetrack/search/<api_query>')
