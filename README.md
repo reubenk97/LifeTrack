@@ -1,17 +1,8 @@
-# <LifeTrack>
+# LifeTrack
 
 ## Description
 
 This project came about because I like to look back and see how I spent my days/weeks/months. I tend to forget some random things I do in a day, so I also like using reminder apps. I wanted to consolidate both of those needs into one app, so I thought of the app LifeTrack. My hope is that it can serve as a one-stop, organized, dynamic todo-tracker app that can be used seamlessly with day-to-day life.
-
-## Table of Contents (Optional)
-
-If your README is long, add a table of contents to make it easy for users to find what they need.
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [Credits](#credits)
-- [License](#license)
 
 ## Installation
 
